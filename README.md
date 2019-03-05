@@ -1,4 +1,4 @@
-"# Asistente de voz " 
+"# Asistente de voz "   
 Raspberry pi   
 python 2/3   
 speech_recognition   
