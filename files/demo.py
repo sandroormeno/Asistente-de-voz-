@@ -24,12 +24,9 @@ GPIO.output(27, False)
 
 temperatura = ['temperatura', 'calor', 'calor']
 humedad = ['humedad', 'húmedo','humedo','umedo']
-wikipedia = ['wikipedia', 'Wikipedia', "wiki", "Wiki"]
+
 terremoto = ['Terremoto', 'terremoto', "temblor", "Temblor", "sismo"]
-encender = [ "Prender", "prender","encender", "Encender", "on"]
-apagar = [ "Apagar", "apagar","off", "of"]
-est_inter = [ "Estación", "estación", "estacion"]
-noticias = [ "Noticias", "noticias", "novedades", "Novedades"]
+
 
 class buscar_res:
 	def __init__(self, texto , tema):
@@ -55,17 +52,7 @@ class buscar_res:
 				os.system("sudo python3 DHT22_hum.py")
 				os.system("sudo killall pigpiod")
 
-	# buscar en wikipedia			
-	def buscar_wiki(self):
-		for i in range(len(self.texto)):
-			clave = self.texto[i]
-			#print "-----------------------------------"
-			if clave in self.tema:
-				buscar = self.texto[i+1:] # busca la palabras después de Wikipedia
-				salida = ' '.join(map(str, buscar))
-				print "Palabras claves: " + salida 
-				buscar_wiki = "sudo python3 -W ignore wiki.py " + "'" + salida + "'"				
-				os.system(buscar_wiki)
+
 
 	# terremoto			
 	def decir_terremoto(self):
@@ -74,61 +61,6 @@ class buscar_res:
 			if clave in self.tema:			
 				os.system("sudo python3 -W ignore terremoto.py")
 
-	# encender luz			
-	def encender_luz(self):
-		for i in range(len(self.texto)):
-			clave = self.texto[i]
-			if clave in self.tema:				
-				#os.system("sudo python3 DHT22_hum.py")
-				print "...Prendiendo la luz..."
-				GPIO.output(27, True) #encineo la luz
-
-	# apagar  luz			
-	def apagar_luz(self):
-		for i in range(len(self.texto)):
-			clave = self.texto[i]
-			if clave in self.tema:				
-				#os.system("sudo python3 DHT22_hum.py")
-				print "...Apagando la luz..."
-				GPIO.output(27, False) #encineo la luz	
-					# apagar  luz	
-
-	#ISS						
-	def estacion_espacial(self):
-		#print " estamos en ISS"	
-		for j in range(len(self.texto)):
-			clave = self.texto[j]
-			#print " clave :" + clave	
-			if clave in self.tema:	
-				buscar = self.texto[j:]
-				salida = ' '.join(map(str, buscar))
-				if 	salida in ['Estación espacial',
-							'estación espacial',
-							'Estación espacial internacional',
-							'estación espacial internacional']:
-							#print "final : " + salida		
-							os.system("sudo python3 -W ignore tracknew.py")	
-	#noticias de salud						
-	def noticias(self):
-		#print " estamos en ISS"	
-		for j in range(len(self.texto)):
-			clave = self.texto[j]
-			#print " clave :" + clave	
-			if clave in self.tema:	
-				buscar = self.texto[j+2:]
-				salida = ' '.join(map(str, buscar))
-				if 	salida in ['medicina','Medicina','Salud','salud']:
-					#print "final : " + salida		
-					os.system("sudo python3 -W ignore salud_titulos.py")
-				if 	salida in ['tecnología','Tecnología','tecnologia','Tecnologia']:
-					#print "final : " + salida		
-					os.system("sudo python3 -W ignore tecnologia_titulos.py")	
-				if 	salida in ['Ciencia','ciencia','Ciencias','ciencias']:
-					#print "final : " + salida		
-					os.system("sudo python3 -W ignore ciencia_titulos.py")
-				if 	salida in ['Política','politia','política','Politica']:
-					#print "final : " + salida		
-					os.system("sudo python3 -W ignore politica_titulos.py")		
 
 
 activo = 0
@@ -174,23 +106,15 @@ try:
 			
 			temp = buscar_res( responder.split(' '), temperatura)
 			hum = buscar_res( responder.split(' '), humedad)
-			wiki = buscar_res( responder.split(' '), wikipedia)
+			
 			temblor = buscar_res( responder.split(' '), terremoto)
-			luz_on = buscar_res( responder.split(' '), encender)
-			luz_off = buscar_res( responder.split(' '), apagar)
-			iss = buscar_res( responder.split(' '), est_inter)
-			news = buscar_res( responder.split(' '), noticias)
-
+			
 
 			temp.decir_temperatura()
 			hum.decir_humedad()
-			wiki.buscar_wiki()
+			
 			temblor.decir_terremoto()
-			luz_on.encender_luz()
-			luz_off.apagar_luz()
-			iss.estacion_espacial()
-			news.noticias()
-
+			
 			#os.system("sudo python3 habla.py")
 			os.system("aplay --device=plughw:1,0 beep.wav -q") 
 
