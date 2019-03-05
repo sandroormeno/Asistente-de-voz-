@@ -9,8 +9,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-#WIT_AI_KEY = "G43CBNY4AC4WNFKHMC52X7C5PMTBGBK4"
-WIT_AI_KEY = "YJCYFTFJQHTDC7J7Y7DWKJKFIANBWCGU"
+
+WIT_AI_KEY = ""
 
 # Pins definitions
 btn_pin = 4
